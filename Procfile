@@ -1,1 +1,1 @@
-web: java -jar target/jessica-0.0.1-SNAPSHOT.jar
+web: java -jar -Dserver.port=$PORT target/jessica-0.0.1-SNAPSHOT.jar
