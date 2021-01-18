@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        h2 { text-align: center; }
+        h3 { text-align: center; }
+
+        table { width: 70%; }
+        td { text-align: center; }
+
+        img {
+            width:  250px;
+            height: 250px;
+        }
+
+        * {box-sizing:border-box}
+
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 250px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+          display: none;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          margin-top: -22px;
+          padding: 16px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Caption text */
+        .text {
+          color: #f2f2f2;
+          font-size: 15px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }
+
+        .numbertext {
+          color: #f2f2f2;
+          font-size: 12px;
+          padding: 8px 12px;
+          position: absolute;
+          top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+          background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1.5s;
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+
+        @keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+    </style>
+
+    <h2 th:if="${jesseIsOk}">Jesse is still in fighting form!</h2>
+    <h2 th:unless="${jesseIsOk}">Jesse was found in the obituaries...</h2>
+</head>
+
+<body>
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+        <!-- Full-width images with number and caption text -->
+        <div class="mySlides fade">
+            <img src="https://i.imgur.com/dDY4ssZ.png" style="width:100%">
+            <div class="text">Much Happy</div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://i.imgur.com/pH4Kqpx.png" style="width:100%">
+            <div class="text">Very Hair</div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://i.imgur.com/F9gVWxk.png" style="width:100%">
+            <div class="text">Such Jesse!</div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://i.imgur.com/fm53XR3.png" style="width:100%">
+            <div class="text">Oops</div>
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://i.imgur.com/cpkgMYv.png" style="width:100%">
+            <div class="text">wow</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
+
+    <!-- The dots/circles -->
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+    </div>
+
+    <div id='table-container'>
+
+        <table id="table">
+            <thead>
+                <tr>
+                    <th colspan="4">
+                        <h2>These people weren't so lucky though</h2>
+                    </th>
+                </tr>
+                <tr>
+                    <th> Date </th>
+                    <th> Name </th>
+                    <th> Age </th>
+                    <th> Location </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${people.empty}">
+                    <td colspan="2"> Looks like everyone is okay today! </td>
+                </tr>
+                <tr th:each="person: ${people}">
+                    <td><span th:text="${person.dateOfDeath}"> </span></td>
+                    <td><span th:text="${person.name}"> </span></td>
+                    <td><span th:text="${person.age}"> </span></td>
+                    <td><span th:text="${person.location}"> </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<link href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" ></script>
+
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable({
+            paging: false,
+            searching: false
+        });
+    } );
+</script>
+
+<script>
+    var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+
+</script>
+
+</html>
