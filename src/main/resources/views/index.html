@@ -179,10 +179,10 @@
                     <td colspan="2"> Looks like everyone is okay today! </td>
                 </tr>
                 <tr th:each="person: ${people}">
-                    <td><span th:text="${person.dateOfDeath}"> </span></td>
-                    <td><span th:text="${person.name}"> </span></td>
-                    <td><span th:text="${person.age}"> </span></td>
-                    <td><span th:text="${person.location}"> </span></td>
+                    <td><span th:text="${person.getDateOfDeath().orElse('Dunno')}"> </span></td>
+                    <td><span th:text="${person.getName().orElse('')}"> </span></td>
+                    <td><span th:text="${person.getAge().orElse('Dunno')}"> </span></td>
+                    <td><span th:text="${person.getLocation().orElse('Dunno')}"> </span></td>
                 </tr>
             </tbody>
         </table>
