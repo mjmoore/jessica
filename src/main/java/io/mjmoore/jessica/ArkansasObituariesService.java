@@ -47,7 +47,6 @@ public class ArkansasObituariesService {
         people.sort(Comparator.comparing(Person::getDateOfDeath,
                 Comparator.comparing(date -> date.orElse(LocalDate.EPOCH))));
 
-        people.add(Person.builder().build());
         return people;
     }
 
